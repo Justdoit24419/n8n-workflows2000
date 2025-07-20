@@ -876,18 +876,20 @@
             }
             
             async apiCall(endpoint, options = {}) {
-                const response = await fetch(`/api${endpoint}`, {
+                const baseUrl = 'http://localhost:5678'; // n8n API 서버 주소
+                const response = await fetch(`${baseUrl}/api/v1${endpoint}`, {
                     headers: {
                         'Content-Type': 'application/json',
+                        'Authorization': 'Bearer YOUR_API_KEY', // n8n API 키 필요시
                         ...options.headers
                     },
                     ...options
-                });
-                
-                if (!response.ok) {
+                  });
+    
+                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
+                 }
+    
                 return response.json();
             }
             
